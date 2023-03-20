@@ -1,130 +1,134 @@
 {
-    "name": "to-unocss",
-    "displayName": "To Unocss",
-    "description": "Vscode extension transform css to unocss",
-    "version": "0.0.2",
-    "publisher": "tounocss",
-    "license": "MIT",
-    "funding": "https://github.com/sponsors/Simon-He95",
-    "homepage": "https://github.com/Simon-He95/tounocss#readme",
-    "repository": "https://github.com/Simon-He95/tounocss",
-    "engines": {
-        "vscode": "^1.76.0"
-    },
-    "bugs": {
-        "url": "https://github.com/Simon-He95/tounocss/issues"
+  "publisher": "tounocss",
+  "name": "to-unocss",
+  "displayName": "To Unocss",
+  "version": "0.0.3",
+  "description": "Vscode extension transform css to unocss",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/Simon-He95",
+  "homepage": "https://github.com/Simon-He95/tounocss#readme",
+  "repository": "https://github.com/Simon-He95/tounocss",
+  "bugs": {
+    "url": "https://github.com/Simon-He95/tounocss/issues"
+  },
+  "keywords": [
+    "unocss",
+    "css",
+    "css to unocss",
+    "transform-to-unocss"
+  ],
+  "categories": [
+    "Formatters",
+    "Snippets",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "activationEvents": [
+    "onLanguage:html",
+    "onLanguage:svelte",
+    "onLanguage:jsx",
+    "onLanguage:tsx",
+    "onLanguage:astro",
+    "onLanguage:vue",
+    "onLanguage:swan",
+    "onLanguage:wxml",
+    "onLanguage:axml"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.ToUnocss",
+        "title": "toUnocss"
       },
-    "categories": [
-        "Formatters",
-        "Snippets",
-        "Other"
+      {
+        "command": "extension.InlineStyleToUnocss",
+        "title": "styleToUnocss"
+      }
     ],
-    "keywords": [
-        "unocss",
-        "css",
-        "css to unocss",
-        "transform-to-unocss"
+    "keybindings": [
+      {
+        "command": "extension.ToUnocss",
+        "key": "cmd+Alt+p"
+      },
+      {
+        "command": "extension.InlineStyleToUnocss",
+        "key": "Alt+shift+p"
+      }
     ],
-    "activationEvents": [
-        "onLanguage:html",
-        "onLanguage:svelte",
-        "onLanguage:jsx",
-        "onLanguage:tsx",
-        "onLanguage:astro",
-        "onLanguage:vue",
-        "onLanguage:swan",
-        "onLanguage:wxml",
-        "onLanguage:axml"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.ToUnocss",
-                "title": "toUnocss"
-            },
-            {
-                "command": "extension.InlineStyleToUnocss",
-                "title": "styleToUnocss"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "extension.ToUnocss",
-                "key": "cmd+Alt+p"
-            },
-            {
-                "command": "extension.InlineStyleToUnocss",
-                "key": "Alt+shift+p"
-            }
-        ],
-        "menus": {
-            "editor/context": [
-                {
-                    "when": "editorFocus",
-                    "command": "extension.ToUnocss",
-                    "group": "6_px"
-                },
-                {
-                    "when": "editorHasSelection",
-                    "command": "extension.InlineStyleToUnocss",
-                    "group": "6_px"
-                }
-            ]
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus",
+          "command": "extension.ToUnocss",
+          "group": "6_px"
         },
-        "configuration": {
-            "type": "object",
-            "title": "to-unocss configuration",
-            "properties": {
-                "to-unocss.baseWidth": {
-                    "type": "number",
-                    "default": 1242,
-                    "description": "%extension.baseWidth.title%"
-                },
-                "to-unocss.fixedDigits": {
-                    "type": "number",
-                    "default": 3,
-                    "description": "%extension.fixedDigits.title%"
-                },
-                "to-unocss.autoRemovePrefixZero": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%extension.autoRemovePrefixZero.title%"
-                }
-            }
+        {
+          "when": "editorHasSelection",
+          "command": "extension.InlineStyleToUnocss",
+          "group": "6_px"
         }
+      ]
     },
-    "scripts": {
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test",
-        "build": "vsce package",
-        "lint": "eslint .",
-        "release": "npm run build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies"
-    },
-    "devDependencies": {
-        "@types/glob": "^8.0.0",
-        "@types/mocha": "^10.0.0",
-        "@types/node": "16.x",
-        "@types/vscode": "^1.76.0",
-        "@typescript-eslint/eslint-plugin": "^5.38.1",
-        "@typescript-eslint/parser": "^5.38.1",
-        "del": "^4.1.1",
-        "eslint": "^8.24.0",
-        "event-stream": "^4.0.1",
-        "glob": "^8.0.3",
-        "mocha": "^10.0.0",
-        "run-sequence": "^2.2.1",
-        "transform-to-unocss": "^0.0.40",
-        "tslint": "^5.16.0",
-        "typescript": "^4.8.4",
-        "vsce": "^1.63.0",
-        "vscode": "^1.1.28",
-        "vscode-nls-dev": "^3.2.6"
-    },
-    "dependencies": {
-        "vscode-nls": "^4.1.1"
-    },
-    "icon": "icon.png",
-    "preview": true
+    "configuration": {
+      "type": "object",
+      "title": "to-unocss configuration",
+      "properties": {
+        "to-unocss.baseWidth": {
+          "type": "number",
+          "default": 1242,
+          "description": "%extension.baseWidth.title%"
+        },
+        "to-unocss.fixedDigits": {
+          "type": "number",
+          "default": 3,
+          "description": "%extension.fixedDigits.title%"
+        },
+        "to-unocss.autoRemovePrefixZero": {
+          "type": "boolean",
+          "default": false,
+          "description": "%extension.autoRemovePrefixZero.title%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "build": "vsce package --no-yarn",
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
+    "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache --fix",
+    "release": "npm run build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies"
+  },
+  "dependencies": {
+    "vscode-nls": "^4.1.1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.37.0",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.76.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "del": "^4.1.1",
+    "esbuild": "^0.17.12",
+    "eslint": "^8.24.0",
+    "event-stream": "^4.0.1",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "rollup": "^3.20.0",
+    "run-sequence": "^2.2.1",
+    "transform-to-unocss": "^0.0.40",
+    "tslint": "^5.16.0",
+    "typescript": "^4.8.4",
+    "vsce": "^1.63.0",
+    "vscode": "^1.1.28",
+    "vscode-nls-dev": "^3.2.6"
+  },
+  "preview": true
 }
