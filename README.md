@@ -7,7 +7,7 @@ This library is to convert css in vue to unocss. [unocss](https://github.com/uno
 
 ## :coffee:
 
-[请我喝一杯咖啡](https://github.com/Simon-He95/sponsor)
+[buy me a cup of coffee](https://github.com/Simon-He95/sponsor)
 
 ## License
 
