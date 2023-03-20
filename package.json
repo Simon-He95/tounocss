@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-unocss",
   "displayName": "To Unocss",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Vscode extension transform css to unocss",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
@@ -105,8 +105,8 @@
     "release": "yarn build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies --no-yarn"
   },
   "dependencies": {
-    "vscode-nls": "^4.1.1",
-    "transform-to-unocss": "^0.0.40"
+    "transform-to-unocss": "^0.0.40",
+    "vscode-nls": "^4.1.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.37.0",
@@ -116,6 +116,7 @@
     "@types/vscode": "^1.76.0",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
+    "bumpp": "^9.0.0",
     "del": "^4.1.1",
     "esbuild": "^0.17.12",
     "eslint": "^8.24.0",
