@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-unocss",
   "displayName": "To Unocss",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Vscode extension transform css to unocss",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
@@ -98,14 +98,15 @@
   "scripts": {
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "test": "yarn compile && node ./node_modules/vscode/bin/test",
     "build": "vsce package --no-yarn",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
     "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache --fix",
-    "release": "npm run build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies"
+    "release": "yarn build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies --no-yarn"
   },
   "dependencies": {
-    "vscode-nls": "^4.1.1"
+    "vscode-nls": "^4.1.1",
+    "transform-to-unocss": "^0.0.40"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.37.0",
@@ -123,7 +124,6 @@
     "mocha": "^10.0.0",
     "rollup": "^3.20.0",
     "run-sequence": "^2.2.1",
-    "transform-to-unocss": "^0.0.40",
     "tslint": "^5.16.0",
     "typescript": "^4.8.4",
     "vsce": "^1.63.0",
