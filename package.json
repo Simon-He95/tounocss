@@ -1,13 +1,19 @@
 {
     "name": "to-unocss",
-    "displayName": "px to rpx",
-    "description": "This is an extension for Visual Studio Code that allows you to convert px to rpx.",
+    "displayName": "To Unocss",
+    "description": "Vscode extension transform css to unocss",
     "version": "0.0.2",
-    "publisher": "simon_he",
-    "repository": "https://github.com/simon_he/tounocss",
+    "publisher": "simonhe",
+    "license": "MIT",
+    "funding": "https://github.com/sponsors/Simon-He95",
+    "homepage": "https://github.com/Simon-He95/tounocss#readme",
+    "repository": "https://github.com/Simon-He95/tounocss",
     "engines": {
         "vscode": "^1.76.0"
     },
+    "bugs": {
+        "url": "https://github.com/Simon-He95/tounocss/issues"
+      },
     "categories": [
         "Formatters",
         "Snippets",
@@ -16,7 +22,8 @@
     "keywords": [
         "unocss",
         "css",
-        "css to unocss"
+        "css to unocss",
+        "transform-to-unocss"
     ],
     "activationEvents": [
         "onLanguage:html",
@@ -33,21 +40,21 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.px2rpx",
+                "command": "extension.ToUnocss",
                 "title": "toUnocss"
             },
             {
-                "command": "extension.px2rpxInSelection",
+                "command": "extension.InlineStyleToUnocss",
                 "title": "styleToUnocss"
             }
         ],
         "keybindings": [
             {
-                "command": "extension.px2rpx",
+                "command": "extension.ToUnocss",
                 "key": "cmd+Alt+p"
             },
             {
-                "command": "extension.px2rpxInSelection",
+                "command": "extension.InlineStyleToUnocss",
                 "key": "Alt+shift+p"
             }
         ],
@@ -55,31 +62,31 @@
             "editor/context": [
                 {
                     "when": "editorFocus",
-                    "command": "extension.px2rpx",
+                    "command": "extension.ToUnocss",
                     "group": "6_px"
                 },
                 {
                     "when": "editorHasSelection",
-                    "command": "extension.px2rpxInSelection",
+                    "command": "extension.InlineStyleToUnocss",
                     "group": "6_px"
                 }
             ]
         },
         "configuration": {
             "type": "object",
-            "title": "px-to-rpx configuration",
+            "title": "to-unocss configuration",
             "properties": {
-                "px-to-rpx.baseWidth": {
+                "to-unocss.baseWidth": {
                     "type": "number",
                     "default": 1242,
                     "description": "%extension.baseWidth.title%"
                 },
-                "px-to-rpx.fixedDigits": {
+                "to-unocss.fixedDigits": {
                     "type": "number",
                     "default": 3,
                     "description": "%extension.fixedDigits.title%"
                 },
-                "px-to-rpx.autoRemovePrefixZero": {
+                "to-unocss.autoRemovePrefixZero": {
                     "type": "boolean",
                     "default": false,
                     "description": "%extension.autoRemovePrefixZero.title%"
@@ -91,9 +98,9 @@
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
-        "package": "gulp package",
-        "build": "gulp build",
-        "publish": "gulp publish"
+        "build": "vsce package",
+        "lint": "eslint .",
+        "release": "npm run build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies"
     },
     "devDependencies": {
         "@types/glob": "^8.0.0",
@@ -106,10 +113,6 @@
         "eslint": "^8.24.0",
         "event-stream": "^4.0.1",
         "glob": "^8.0.3",
-        "gulp": "^4.0.2",
-        "gulp-filter": "^5.1.0",
-        "gulp-sourcemaps": "^2.6.5",
-        "gulp-typescript": "^5.0.1",
         "mocha": "^10.0.0",
         "run-sequence": "^2.2.1",
         "transform-to-unocss": "^0.0.40",
@@ -121,5 +124,7 @@
     },
     "dependencies": {
         "vscode-nls": "^4.1.1"
-    }
+    },
+    "icon": "icon.png",
+    "preview": true
 }

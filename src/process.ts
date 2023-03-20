@@ -1,6 +1,6 @@
 import { toUnocss,transfromCode } from 'transform-to-unocss';
 import { getCssType } from './utils';
-export class CssRpxProcess {
+export class CssToUnocssProcess {
 
     /**
      * transform px to rpx
@@ -21,7 +21,7 @@ export class CssRpxProcess {
     async convertAll(code: string,fileName:string): Promise<string> {
         if (!code) {return code;}
         const type = getCssType(fileName);
-        const unocss = (await transfromCode(code,fileName,type)) ?? code;
+        const unocss = (await transfromCode(code,fileName, type as any)) ?? code;
         return unocss;
     }
 }
