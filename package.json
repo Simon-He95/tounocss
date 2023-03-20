@@ -1,45 +1,125 @@
 {
-  "name": "tounocss",
-  "displayName": "toUnocss",
-  "description": "transform css to unocss",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.76.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:tounocss.helloWorld"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "tounocss.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "pnpm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "pnpm run compile && pnpm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.76.0",
-    "@types/glob": "^8.0.0",
-    "@types/mocha": "^10.0.0",
-    "@types/node": "16.x",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
-    "eslint": "^8.24.0",
-    "glob": "^8.0.3",
-    "mocha": "^10.0.0",
-    "typescript": "^4.8.4",
-    "@vscode/test-electron": "^2.1.5"
-  }
+    "name": "to-unocss",
+    "displayName": "px to rpx",
+    "description": "This is an extension for Visual Studio Code that allows you to convert px to rpx.",
+    "version": "0.0.2",
+    "publisher": "simon_he",
+    "repository": "https://github.com/simon_he/tounocss",
+    "engines": {
+        "vscode": "^1.76.0"
+    },
+    "categories": [
+        "Formatters",
+        "Snippets",
+        "Other"
+    ],
+    "keywords": [
+        "unocss",
+        "css",
+        "css to unocss"
+    ],
+    "activationEvents": [
+        "onLanguage:html",
+        "onLanguage:svelte",
+        "onLanguage:jsx",
+        "onLanguage:tsx",
+        "onLanguage:astro",
+        "onLanguage:vue",
+        "onLanguage:swan",
+        "onLanguage:wxml",
+        "onLanguage:axml"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.px2rpx",
+                "title": "toUnocss"
+            },
+            {
+                "command": "extension.px2rpxInSelection",
+                "title": "styleToUnocss"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.px2rpx",
+                "key": "cmd+Alt+p"
+            },
+            {
+                "command": "extension.px2rpxInSelection",
+                "key": "Alt+shift+p"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "when": "editorFocus",
+                    "command": "extension.px2rpx",
+                    "group": "6_px"
+                },
+                {
+                    "when": "editorHasSelection",
+                    "command": "extension.px2rpxInSelection",
+                    "group": "6_px"
+                }
+            ]
+        },
+        "configuration": {
+            "type": "object",
+            "title": "px-to-rpx configuration",
+            "properties": {
+                "px-to-rpx.baseWidth": {
+                    "type": "number",
+                    "default": 1242,
+                    "description": "%extension.baseWidth.title%"
+                },
+                "px-to-rpx.fixedDigits": {
+                    "type": "number",
+                    "default": 3,
+                    "description": "%extension.fixedDigits.title%"
+                },
+                "px-to-rpx.autoRemovePrefixZero": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "%extension.autoRemovePrefixZero.title%"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "package": "gulp package",
+        "build": "gulp build",
+        "publish": "gulp publish"
+    },
+    "devDependencies": {
+        "@types/glob": "^8.0.0",
+        "@types/mocha": "^10.0.0",
+        "@types/node": "16.x",
+        "@types/vscode": "^1.76.0",
+        "@typescript-eslint/eslint-plugin": "^5.38.1",
+        "@typescript-eslint/parser": "^5.38.1",
+        "del": "^4.1.1",
+        "eslint": "^8.24.0",
+        "event-stream": "^4.0.1",
+        "glob": "^8.0.3",
+        "gulp": "^4.0.2",
+        "gulp-filter": "^5.1.0",
+        "gulp-sourcemaps": "^2.6.5",
+        "gulp-typescript": "^5.0.1",
+        "mocha": "^10.0.0",
+        "run-sequence": "^2.2.1",
+        "transform-to-unocss": "^0.0.40",
+        "tslint": "^5.16.0",
+        "typescript": "^4.8.4",
+        "vsce": "^1.63.0",
+        "vscode": "^1.1.28",
+        "vscode-nls-dev": "^3.2.6"
+    },
+    "dependencies": {
+        "vscode-nls": "^4.1.1"
+    }
 }

@@ -1,26 +1,61 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+'use strict';
 import * as vscode from 'vscode';
+import { CssRpxProcess } from './process';
+import { CssRpxProvider } from './provider';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+let config = null;
+// 插件被激活时调用activate
 export function activate(context: vscode.ExtensionContext) {
+    config = vscode.workspace.getConfiguration("px-to-rpx");
+    const process = new CssRpxProcess();
+    let provider = new CssRpxProvider(process);
+    const LANS = ['html', 'vue', "swan", "wxml", "axml", 'css', "wxss", "acss", 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss'];
+    for (let lan of LANS) {
+        //为对应类型文件添加代码提示
+        let providerDisposable = vscode.languages.registerCompletionItemProvider(lan, provider);
+        context.subscriptions.push(providerDisposable);
+    }
+     
+    //注册px2rpx命令
+    vscode.commands.registerTextEditorCommand('extension.px2rpx', async(textEditor, edit) => {
+        const doc = textEditor.document;
+        const fileName = doc.fileName;
+        const start = new vscode.Position(0, 0);
+        const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length);
+        //获取全部文本区域
+        const selection = new vscode.Range(start, end);
+        let text = doc.getText(selection);
+        //替换文件内容
+        const newSelection = await process.convertAll(text,fileName);
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "tounocss" is now active!');
+        textEditor.edit( builder => {
+            builder.replace(selection, newSelection);
+        });
+    });
+    
+    //注册px2rpxInSelection命令
+    let disposable = vscode.commands.registerTextEditorCommand('extension.px2rpxInSelection', async (textEditor, edit) => {
+        const doc = textEditor.document;
+        let selection: vscode.Selection | vscode.Range = textEditor.selection;
+        //获取选中区域
+        if (selection.isEmpty) {
+            const start = new vscode.Position(0, 0);
+            const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length);
+            selection = new vscode.Range(start, end);
+        }
+        
+        let text = doc.getText(selection);
+        const newSelection = await process.convert(text);
+        //替换文件内容
+        textEditor.edit(builder => {
+            builder.replace(selection,newSelection );
+        });
+    });
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('tounocss.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from toUnocss!');
-	});
-
-	context.subscriptions.push(disposable);
+    context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
+// this method is called when your extension is deactivated
 export function deactivate() {}
