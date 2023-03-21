@@ -1,3 +1,4 @@
+import { toUnocss } from 'transform-to-unocss';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 'use strict'
@@ -11,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
   // config = vscode.workspace.getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()
   // let provider = new CssToUnocssProvider(process);
-  // const LANS = ['html', 'vue', "swan", "wxml", "axml", 'css', "wxss", "acss", 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss'];
+  const LANS = ['html', 'vue', "swan", "wxml", "axml", 'css', "wxss", "acss", 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss'];
   // for (let lan of LANS) {
   //     //为对应类型文件添加代码提示
   //     let providerDisposable = vscode.languages.registerCompletionItemProvider(lan, provider);
@@ -53,6 +54,29 @@ export function activate(context: vscode.ExtensionContext) {
       builder.replace(selection, newSelection)
     })
   })
+
+  // 注册hover事件
+  vscode.languages.registerHoverProvider(LANS, {
+    provideHover(document, position, token) {
+       // 获取当前选中的文本范围
+       const editor = vscode.window.activeTextEditor;
+       if (!editor) {
+           return;
+       }
+       const selection = editor.selection;
+       const wordRange = new vscode.Range(selection.start, selection.end);
+       
+       // 获取当前选中的文本内容
+       const selectedText = editor.document.getText(wordRange);
+       const unocssText = toUnocss(selectedText)??selectedText
+       if(selectedText === unocssText) return
+       
+       const md = new vscode.MarkdownString()
+       md.appendMarkdown(`ToUnocss: <span style="color:green">${unocssText}</span>\n`)
+       
+      return new vscode.Hover(md);
+    },
+  });
 
   context.subscriptions.push(disposable)
 }
