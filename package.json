@@ -105,7 +105,7 @@
     "release": "yarn build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies --no-yarn"
   },
   "dependencies": {
-    "transform-to-unocss": "^0.0.40",
+    "transform-to-unocss": "^0.0.41",
     "vscode-nls": "^4.1.1"
   },
   "devDependencies": {
