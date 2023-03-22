@@ -3,9 +3,13 @@
 </p>
 <p align="center"> English | <a href="./README_zh.md">简体中文</a></p>
 
-This library is to convert css in vue to unocss. [unocss](https://github.com/unocss/unocss) can reuse styles better to reduce the packaging volume, which can be converted as a performance optimization method, and it can also make it easier for old projects to upgrade to unocss
+The vscode plugin converts css to [unocss](https://github.com/unocss/unocss).It's powered by [transform-to-unocss](https://github.com/Simon-He95/transformToUnocss).
 
 ![demo](/assets/demo.gif)
+
+## Install
+- [click to download vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.7/to-unocss-0.0.7.vsix)
+- run code --install-extension ./to-unocss-0.0.7.vsix or import it from vscode extension
 
 ## :coffee:
 

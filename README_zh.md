@@ -3,10 +3,13 @@
 </p>
 <p align="center"> <a href="./README.md">English</a> | 简体中文</p>
 
-这个库就是把 vue 中的 css 转成 unocss 的。 [unocss](https://github.com/unocss/unocss) 可以更好的复用样式减少打包体积，可以转化为一种性能优化的方式，也可以让老项目更容易升级到 unocss。
+vscode 插件将 css 转换为 [unocss](https://github.com/unocss/unocss)。它由 [transform-to-unocss](https://github.com/Simon-He95/transformToUnocss) 提供支持。
 
 ![demo](/assets/demo.gif)
 
+## 安装
+- [点击下载vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.7/to-unocss-0.0.7.vsix)
+- 运行代码 --install-extension ./to-unocss-0.0.7.vsix 或从 vscode 扩展导入它
 
 ## :coffee:
 
