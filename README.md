@@ -5,10 +5,10 @@
 
 The vscode plugin converts css to [unocss](https://github.com/unocss/unocss).It's powered by [transform-to-unocss](https://github.com/Simon-He95/transformToUnocss).
 
-![demo](/assets/demo.gif)
+![demo](/assets/demo1.gif)
 
 ## Install
-- [click to download vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.14/to-unocss-0.0.14.vsix)
+- [click to download vsix]x(https://github.com/Simon-He95/tounocss/releases/download/v0.0.14/to-unocss-0.0.14.vsix)
 - run code --install-extension ./to-unocss-0.0.14.vsix or import it from vscode extension
 
 ## Question
