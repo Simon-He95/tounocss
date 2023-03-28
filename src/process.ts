@@ -1,5 +1,5 @@
-import { toUnocss, transfromCode } from 'transform-to-unocss'
-import { getCssType } from './utils'
+import { transfromCode } from 'transform-to-unocss'
+import { getCssType, getMultipedUnocssText } from './utils'
 export class CssToUnocssProcess {
   /**
      * transform px to rpx
@@ -8,7 +8,7 @@ export class CssToUnocssProcess {
      * @return {string} transformed text
      */
   convert(text: string) {
-    return toUnocss(text) ?? text
+    return getMultipedUnocssText(text) ?? text
   }
 
   /**

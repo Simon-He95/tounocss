@@ -1,6 +1,6 @@
-import { toUnocss } from 'transform-to-unocss'
 import * as vscode from 'vscode'
 import { CssToUnocssProcess } from './process'
+import { getMultipedUnocssText } from './utils'
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 // 'use strict'
@@ -70,21 +70,9 @@ export function activate(context: vscode.ExtensionContext) {
       const selectedText = editor.document.getText(wordRange)
       if (!selectedText || !/[\w\-]+:/.test(selectedText))
         return
-      const selectedTexts = selectedText.split(';')
-      let isChanged = false
-      const selectedNewTexts = []
-      for (let i = 0; i < selectedTexts.length; i++) {
-        const text = selectedTexts[i]
-        const newText = toUnocss(text) ?? text
-        if (!isChanged)
-          isChanged = newText !== text
-        selectedNewTexts.push(newText)
-      }
-      // 没有存在能够转换的元素
-      if (!isChanged)
+      const selectedUnocssText = getMultipedUnocssText(selectedText)
+      if (!selectedUnocssText)
         return
-
-      const selectedUnocssText = selectedNewTexts.join(' ')
 
       const md = new vscode.MarkdownString()
       md.appendMarkdown(`ToUnocss: <span style="color:green">${selectedUnocssText}</span>\n`)
