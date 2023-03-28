@@ -46,7 +46,6 @@ export function activate(context: vscode.ExtensionContext) {
       const end = new vscode.Position(doc.lineCount - 1, doc.lineAt(doc.lineCount - 1).text.length)
       selection = new vscode.Range(start, end)
     }
-
     const text = doc.getText(selection)
     const newSelection = await process.convert(text)
     // 替换文件内容

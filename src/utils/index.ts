@@ -9,12 +9,14 @@ export function getCssType(filename: string) {
 }
 
 export function getMultipedUnocssText(text: string) {
-  const selectedTexts = text.split(';')
+  const selectedTexts = text.split(';').filter(i => i !== '"')
   let isChanged = false
   const selectedNewTexts = []
   for (let i = 0; i < selectedTexts.length; i++) {
     const text = selectedTexts[i]
     const newText = toUnocss(text) ?? text
+    if (!newText)
+      continue
     if (!isChanged)
       isChanged = newText !== text
     selectedNewTexts.push(newText)
