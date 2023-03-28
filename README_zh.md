@@ -5,7 +5,7 @@
 
 vscode 插件将 css 转换为 [unocss](https://github.com/unocss/unocss)。它由 [transform-to-unocss](https://github.com/Simon-He95/transformToUnocss) 提供支持。
 
-![demo](/assets/demo.gif)
+![demo](/assets/demo1.gif)
 
 ## 安装
 - [点击下载vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.14/to-unocss-0.0.14.vsix)
