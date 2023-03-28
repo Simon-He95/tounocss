@@ -8,8 +8,11 @@ The vscode plugin converts css to [unocss](https://github.com/unocss/unocss).It'
 ![demo](/assets/demo.gif)
 
 ## Install
-- [click to download vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.7/to-unocss-0.0.7.vsix)
-- run code --install-extension ./to-unocss-0.0.7.vsix or import it from vscode extension
+- [click to download vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.14/to-unocss-0.0.14.vsix)
+- run code --install-extension ./to-unocss-0.0.14.vsix or import it from vscode extension
+
+## Question
+Downloading directly from the vscode extension market will not take effect, please download from the released version and import it from VSIX
 
 ## :coffee:
 
