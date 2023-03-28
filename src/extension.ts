@@ -68,12 +68,26 @@ export function activate(context: vscode.ExtensionContext) {
 
       // 获取当前选中的文本内容
       const selectedText = editor.document.getText(wordRange)
-      const unocssText = toUnocss(selectedText) ?? selectedText
-      if (selectedText === unocssText)
+      if (!selectedText || !/[\w\-]+:/.test(selectedText))
+        return
+      const selectedTexts = selectedText.split(';')
+      let isChanged = false
+      const selectedNewTexts = []
+      for (let i = 0; i < selectedTexts.length; i++) {
+        const text = selectedTexts[i]
+        const newText = toUnocss(text) ?? text
+        if (!isChanged)
+          isChanged = newText !== text
+        selectedNewTexts.push(newText)
+      }
+      // 没有存在能够转换的元素
+      if (!isChanged)
         return
 
+      const selectedUnocssText = selectedNewTexts.join(' ')
+
       const md = new vscode.MarkdownString()
-      md.appendMarkdown(`ToUnocss: <span style="color:green">${unocssText}</span>\n`)
+      md.appendMarkdown(`ToUnocss: <span style="color:green">${selectedUnocssText}</span>\n`)
 
       return new vscode.Hover(md)
     },
