@@ -1,23 +1,14 @@
 import * as vscode from 'vscode'
 import { CssToUnocssProcess } from './process'
 import { getMultipedUnocssText } from './utils'
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 // 'use strict'
-// import { CssToUnocssProvider } from './provider';
 
 // let config = null
 // 插件被激活时调用activate
 export function activate(context: vscode.ExtensionContext) {
   // config = vscode.workspace.getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()
-  // let provider = new CssToUnocssProvider(process);
   const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
-  // for (let lan of LANS) {
-  //     //为对应类型文件添加代码提示
-  //     let providerDisposable = vscode.languages.registerCompletionItemProvider(lan, provider);
-  //     context.subscriptions.push(providerDisposable);
-  // }
 
   // 注册ToUnocss命令
   vscode.commands.registerTextEditorCommand('extension.ToUnocss', async (textEditor) => {
@@ -56,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // 注册hover事件
   vscode.languages.registerHoverProvider(LANS, {
-    provideHover() {
+    provideHover(document, position) {
       // 获取当前选中的文本范围
       const editor = vscode.window.activeTextEditor
       if (!editor)
@@ -64,9 +55,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       const selection = editor.selection
       const wordRange = new vscode.Range(selection.start, selection.end)
-
+      const range = document.getWordRangeAtPosition(position)
+      const word = document.getText(range)
       // 获取当前选中的文本内容
-      const selectedText = editor.document.getText(wordRange)
+      const selectedText = editor.document.getText(wordRange) || word
       if (!selectedText || !/[\w\-]+:/.test(selectedText))
         return
       const selectedUnocssText = getMultipedUnocssText(selectedText)
