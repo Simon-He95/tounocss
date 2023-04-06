@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-unocss",
   "displayName": "To Unocss",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Vscode extension transform css to unocss",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
@@ -59,42 +59,7 @@
         "command": "extension.InlineStyleToUnocss",
         "key": "Alt+shift+p"
       }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "when": "editorFocus",
-          "command": "extension.ToUnocss",
-          "group": "6_px"
-        },
-        {
-          "when": "editorHasSelection",
-          "command": "extension.InlineStyleToUnocss",
-          "group": "6_px"
-        }
-      ]
-    },
-    "configuration": {
-      "type": "object",
-      "title": "to-unocss configuration",
-      "properties": {
-        "to-unocss.baseWidth": {
-          "type": "number",
-          "default": 1242,
-          "description": "%extension.baseWidth.title%"
-        },
-        "to-unocss.fixedDigits": {
-          "type": "number",
-          "default": 3,
-          "description": "%extension.fixedDigits.title%"
-        },
-        "to-unocss.autoRemovePrefixZero": {
-          "type": "boolean",
-          "default": false,
-          "description": "%extension.autoRemovePrefixZero.title%"
-        }
-      }
-    }
+    ]
   },
   "scripts": {
     "compile": "tsc -p ./",
@@ -109,7 +74,6 @@
     "vscode-nls": "^4.1.2"
   },
   "devDependencies": {
-    "transform-to-unocss": "^0.0.54",
     "@antfu/eslint-config": "^0.37.0",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
@@ -127,9 +91,9 @@
     "mocha": "^10.0.0",
     "rollup": "^3.20.0",
     "run-sequence": "^2.2.1",
+    "transform-to-unocss": "^0.0.55",
     "tslint": "^5.16.0",
     "typescript": "^4.8.4",
     "vscode-nls-dev": "^3.2.6"
-  },
-  "preview": true
+  }
 }

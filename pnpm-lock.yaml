@@ -18,7 +18,7 @@ specifiers:
   mocha: ^10.0.0
   rollup: ^3.20.0
   run-sequence: ^2.2.1
-  transform-to-unocss: ^0.0.54
+  transform-to-unocss: ^0.0.55
   tslint: ^5.16.0
   typescript: ^4.8.4
   vscode-nls: ^4.1.2
@@ -45,7 +45,7 @@ devDependencies:
   mocha: 10.2.0
   rollup: 3.20.2
   run-sequence: 2.2.1
-  transform-to-unocss: 0.0.54
+  transform-to-unocss: 0.0.55
   tslint: 5.20.1_typescript@4.9.5
   typescript: 4.9.5
   vscode-nls-dev: 3.3.2
@@ -3869,8 +3869,8 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /transform-to-unocss/0.0.54:
-    resolution: {integrity: sha512-ZUva6gO4uM907ReXsm07dMnYFJTDfMhYkrBHVUjt3lbUGWGPfQ1J89bubz+WWSlod0A5O7E3VF7gD2S/ffF3+w==}
+  /transform-to-unocss/0.0.55:
+    resolution: {integrity: sha512-JyJX2nSGlIS4Q5ctVwZWlpPN+7fHAiJqd2iRRvueJvw9fr9zbfOxxSsZVRhprbo5qzt6O1JPOj/N4id6+2kNHg==}
     hasBin: true
     dependencies:
       fast-glob: 3.2.12
