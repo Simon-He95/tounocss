@@ -1,0 +1,1 @@
+{"version":3,"file":"tsup.config.js","sourceRoot":"","sources":["tsup.config.ts"],"names":[],"mappings":";;AAAA,+BAAmC;AAEnC,kBAAe,IAAA,mBAAY,EAAC;IAC1B,KAAK,EAAE;QACL,cAAc;KACf;IACD,MAAM,EAAE,CAAC,KAAK,CAAC;IACf,KAAK,EAAE,KAAK;IACZ,GAAG,EAAE,KAAK;IACV,QAAQ,EAAE;QACR,QAAQ;KACT;CACF,CAAC,CAAA"}

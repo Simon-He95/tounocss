@@ -18,15 +18,15 @@
     "transform-to-unocss"
   ],
   "categories": [
-    "Formatters",
-    "Snippets",
     "Other"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/index.js",
   "icon": "icon.png",
+  "files": [
+    "dist"
+  ],
   "engines": {
-    "node": "14.18.1",
-    "vscode": "^1.73.0"
+    "vscode": "^1.77.0"
   },
   "activationEvents": [
     "onLanguage:html",
@@ -65,32 +65,25 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "test": "npm compile && node ./node_modules/vscode/bin/test",
-    "build": "vsce package",
+    "build": "tsup src/index.ts --external vscode",
+    "package": "vsce package",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
     "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache --fix",
-    "release": "npm build && npx bumpp --commit --tag --push --all && vsce publish --no-dependencies"
+    "publish": "vsce publish --no-dependencies",
+    "release": "bumpp && npm run publish"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.37.0",
-    "@types/glob": "^8.0.0",
-    "@types/mocha": "^10.0.0",
-    "@types/node": "16.x",
-    "@types/vscode": "^1.1.28",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
-    "@vscode/vsce": "^2.18.0",
-    "bumpp": "^9.0.0",
-    "del": "^4.1.1",
-    "esbuild": "^0.17.12",
-    "eslint": "^8.24.0",
-    "event-stream": "^4.0.1",
-    "glob": "^8.0.3",
-    "mocha": "^10.0.0",
-    "rollup": "^3.20.0",
-    "run-sequence": "^2.2.1",
+    "@antfu/eslint-config": "^0.38.4",
+    "@types/node": "^18.15.11",
+    "@types/vscode": "^1.77.0",
+    "bumpp": "^9.1.0",
+    "eslint": "^8.37.0",
+    "pnpm": "^8.1.1",
     "transform-to-unocss": "0.0.55",
-    "tslint": "^5.16.0",
+    "tsup": "^6.7.0",
     "typescript": "^4.8.4",
-    "vscode-nls-dev": "^3.2.6"
+    "vitest": "^0.29.8",
+    "vsce": "^2.15.0"
+
   }
 }

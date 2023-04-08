@@ -1,4 +1,5 @@
-.github/**
-.vscode/**
-.vscode-test/**
-scripts/**
+src
+node_modules
+test
+.github
+.vscode
