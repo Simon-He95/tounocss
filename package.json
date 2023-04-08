@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-unocss",
   "displayName": "To Unocss",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Vscode extension transform css to unocss",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
@@ -91,7 +91,7 @@
     "mocha": "^10.0.0",
     "rollup": "^3.20.0",
     "run-sequence": "^2.2.1",
-    "transform-to-unocss": "^0.0.55",
+    "transform-to-unocss": "0.0.55",
     "tslint": "^5.16.0",
     "typescript": "^4.8.4",
     "vscode-nls-dev": "^3.2.6"
