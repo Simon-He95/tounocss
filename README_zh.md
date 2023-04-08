@@ -7,13 +7,6 @@ vscode 插件将 css 转换为 [unocss](https://github.com/unocss/unocss)。它�
 
 ![demo](/assets/demo1.gif)
 
-## 安装
-- [点击下载vsix](https://github.com/Simon-He95/tounocss/releases/download/v0.0.14/to-unocss-0.0.14.vsix)
-- 运行代码 --install-extension ./to-unocss-0.0.14.vsix 或从 vscode 扩展导入它
-
-## 问题
-直接从vscode扩展市场下载不会生效，请从发布版下载，从VSIX导入
-
 ## :coffee:
 
 [请我喝一杯咖啡](https://github.com/Simon-He95/sponsor)
