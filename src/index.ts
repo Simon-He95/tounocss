@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         let word = document.getText(range)
         const lineNumber = position.line
         const line = document.lineAt(lineNumber).text
-        const wholeReg = new RegExp(`(\\w+:)?([\\w\\-\\[\\(\\!]+)?${word}(:*[^"\\s\\/>]+)?`)
+        const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*[^";\\s\\/>]+)?`)
         const matcher = line.match(wholeReg)
         if (matcher)
           word = matcher[0]
@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       // 获取当前选中的文本内容
-      if (!selectedText || !/[\w\-]+:/.test(selectedText))
+      if (!selectedText || !/[\w\-]+\s*:/.test(selectedText))
         return
       const selectedUnocssText = getMultipedUnocssText(selectedText)
       if (!selectedUnocssText)
