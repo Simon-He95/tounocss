@@ -5,6 +5,7 @@ import { getMultipedUnocssText } from './utils'
 
 // let config = null
 // 插件被激活时调用activate
+const styleReg = /style="([^"]+)"/
 export function activate(context: vscode.ExtensionContext) {
   // config = vscode.workspace.getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()
@@ -61,10 +62,15 @@ export function activate(context: vscode.ExtensionContext) {
         let word = document.getText(range)
         const lineNumber = position.line
         const line = document.lineAt(lineNumber).text
-        const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*[^";\\s\\/>]+)?`)
-        const matcher = line.match(wholeReg)
-        if (matcher)
+        const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`)
+        const styleMatch = word.match(styleReg)
+        if(styleMatch){
+          word = styleMatch[1]
+        }else {
+          const matcher = line.match(wholeReg)
+          if (matcher)
           word = matcher[0]
+        }
         selectedText = word
       }
 
