@@ -91,8 +91,10 @@ export function activate(context: vscode.ExtensionContext) {
         return
 
       const md = new vscode.MarkdownString()
-      md.appendMarkdown(`ToUnocss: <span style="color:green">${selectedUnocssText}</span>\n`)
-
+      md.isTrusted = true
+      md.supportHtml = true
+      md.appendMarkdown('<a href="https://github.com/Simon-He95/tounocss">To Unocss:</a>\n')
+      md.appendCodeblock(selectedUnocssText, 'js')
       return new vscode.Hover(md)
     },
   })
