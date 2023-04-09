@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-unocss",
   "displayName": "To Unocss",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "Vscode extension transform css to unocss",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
