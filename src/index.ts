@@ -58,18 +58,27 @@ export function activate(context: vscode.ExtensionContext) {
       let selectedText = editor.document.getText(wordRange)
 
       if (!selectedText) {
-        const range = document.getWordRangeAtPosition(position)
+        const range = document.getWordRangeAtPosition(position) as any
         let word = document.getText(range)
         const lineNumber = position.line
         const line = document.lineAt(lineNumber).text
-        const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`)
         const styleMatch = word.match(styleReg)
-        if(styleMatch){
+
+        if (styleMatch) {
           word = styleMatch[1]
-        }else {
-          const matcher = line.match(wholeReg)
-          if (matcher)
-          word = matcher[0]
+        }
+        else {
+          // 可能存在多项，查找离range最近的
+          const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g')
+
+          for (const match of line.matchAll(wholeReg)) {
+            const { index } = match
+            const pos = index! + match[0].indexOf(word)
+            if (pos === range?.c?.e) {
+              word = match[0]
+              break
+            }
+          }
         }
         selectedText = word
       }

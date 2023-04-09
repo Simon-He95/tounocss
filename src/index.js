@@ -44,6 +44,7 @@ export function activate(context) {
     // 注册hover事件
     vscode.languages.registerHoverProvider(LANS, {
         provideHover(document, position) {
+            var _a;
             // 获取当前选中的文本范围
             const editor = vscode.window.activeTextEditor;
             if (!editor)
@@ -56,15 +57,21 @@ export function activate(context) {
                 let word = document.getText(range);
                 const lineNumber = position.line;
                 const line = document.lineAt(lineNumber).text;
-                const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`);
                 const styleMatch = word.match(styleReg);
                 if (styleMatch) {
                     word = styleMatch[1];
                 }
                 else {
-                    const matcher = line.match(wholeReg);
-                    if (matcher)
-                        word = matcher[0];
+                    // 可能存在多项，查找离range最近的
+                    const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g');
+                    for (const match of line.matchAll(wholeReg)) {
+                        const { index } = match;
+                        const pos = index + match[0].indexOf(word);
+                        if (pos === ((_a = range === null || range === void 0 ? void 0 : range.c) === null || _a === void 0 ? void 0 : _a.e)) {
+                            word = match[0];
+                            break;
+                        }
+                    }
                 }
                 selectedText = word;
             }
