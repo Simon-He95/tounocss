@@ -13,7 +13,3 @@
 ## License
 
 [MIT](./license)
-
-```shell
-bg="red"
-```
