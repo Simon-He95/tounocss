@@ -64,6 +64,8 @@ export function activate(context: vscode.ExtensionContext) {
       const editor = vscode.window.activeTextEditor
       if (!editor)
         return
+      // 移除样式
+      vscode.window.activeTextEditor?.setDecorations(decorationType, [])
       const selection = editor.selection
       const wordRange = new vscode.Range(selection.start, selection.end)
       let selectedText = editor.document.getText(wordRange)
