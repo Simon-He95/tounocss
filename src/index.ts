@@ -127,6 +127,12 @@ export function activate(context: vscode.ExtensionContext) {
     },
   })
 
+    // 监听编辑器选择内容变化的事件
+  vscode.window.onDidChangeTextEditorSelection(event => {
+    // 移除样式
+    vscode.window.activeTextEditor?.setDecorations(decorationType, []);
+  });
+
   context.subscriptions.push(disposable)
 }
 

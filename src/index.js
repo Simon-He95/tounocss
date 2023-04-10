@@ -9,6 +9,17 @@ export function activate(context) {
     // config = vscode.workspace.getConfiguration('to-unocss')
     const process = new CssToUnocssProcess();
     const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss'];
+    // style
+    const decorationType = vscode.window.createTextEditorDecorationType({
+        dark: {
+            textDecoration: 'underline',
+            backgroundColor: 'rgba(144, 238, 144, 0.5)',
+            color: 'black',
+        },
+        textDecoration: 'underline',
+        backgroundColor: 'rgba(255, 165, 0, 0.5)',
+        color: '#ffffff',
+    });
     // 注册ToUnocss命令
     vscode.commands.registerTextEditorCommand('extension.ToUnocss', async (textEditor) => {
         const doc = textEditor.document;
@@ -52,23 +63,34 @@ export function activate(context) {
             const selection = editor.selection;
             const wordRange = new vscode.Range(selection.start, selection.end);
             let selectedText = editor.document.getText(wordRange);
+            const realRangeMap = [];
             if (!selectedText) {
                 const range = document.getWordRangeAtPosition(position);
                 let word = document.getText(range);
+                const line = range.c.c;
                 const lineNumber = position.line;
-                const line = document.lineAt(lineNumber).text;
+                const lineText = document.lineAt(lineNumber).text;
                 const styleMatch = word.match(styleReg);
                 if (styleMatch) {
                     word = styleMatch[1];
+                    const index = styleMatch.index;
+                    realRangeMap.push({
+                        content: styleMatch[0],
+                        range: new vscode.Range(new vscode.Position(line, index), new vscode.Position(line, index + styleMatch[1].length)),
+                    });
                 }
                 else {
                     // 可能存在多项，查找离range最近的
-                    const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g');
-                    for (const match of line.matchAll(wholeReg)) {
+                    const wholeReg = new RegExp(`([\\w\\-]+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g');
+                    for (const match of lineText.matchAll(wholeReg)) {
                         const { index } = match;
                         const pos = index + match[0].indexOf(word);
                         if (pos === ((_a = range === null || range === void 0 ? void 0 : range.c) === null || _a === void 0 ? void 0 : _a.e)) {
                             word = match[0];
+                            realRangeMap.push({
+                                content: match[0],
+                                range: new vscode.Range(new vscode.Position(line, index), new vscode.Position(line, index + match[0].length)),
+                            });
                             break;
                         }
                     }
@@ -81,6 +103,8 @@ export function activate(context) {
             const selectedUnocssText = getMultipedUnocssText(selectedText);
             if (!selectedUnocssText)
                 return;
+            // 增加decorationType样式
+            editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item) => item.range)));
             const md = new vscode.MarkdownString();
             md.isTrusted = true;
             md.supportHtml = true;
@@ -88,6 +112,12 @@ export function activate(context) {
             md.appendCodeblock(selectedUnocssText, 'js');
             return new vscode.Hover(md);
         },
+    });
+    // 监听编辑器选择内容变化的事件
+    vscode.window.onDidChangeTextEditorSelection(event => {
+        var _a;
+        // 移除样式
+        (_a = vscode.window.activeTextEditor) === null || _a === void 0 ? void 0 : _a.setDecorations(decorationType, []);
     });
     context.subscriptions.push(disposable);
 }
