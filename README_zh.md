@@ -7,6 +7,24 @@ vscode 插件将 css 转换为 [unocss](https://github.com/unocss/unocss)。它�
 
 ![demo](/assets/demo.gif)
 
+## Config
+```
+// 自定义配置高亮样式
+// settings.json
+  "to-unocss":{
+    "dark": {
+      "textDecoration": "underline",
+      "backgroundColor": "rgba(144, 238, 144, 0.5)",
+      "color": "black",
+    },
+    "light":{
+      "textDecoration": "underline",
+      "backgroundColor": "rgba(255, 165, 0, 0.5)",
+      "color": "#ffffff",
+    }
+  }
+```
+
 ## :coffee:
 
 [请我喝一杯咖啡](https://github.com/Simon-He95/sponsor)

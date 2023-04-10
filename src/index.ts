@@ -7,20 +7,27 @@ import { getMultipedUnocssText } from './utils'
 // 插件被激活时调用activate
 const styleReg = /style="([^"]+)"/
 export function activate(context: vscode.ExtensionContext) {
-  // config = vscode.workspace.getConfiguration('to-unocss')
+  const { dark, light } = vscode.workspace.getConfiguration('to-unocss')
+
   const process = new CssToUnocssProcess()
   const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
   // style
-  const decorationType = vscode.window.createTextEditorDecorationType({
+  const style = Object.assign({
     dark: {
-      textDecoration: 'underline',
-      backgroundColor: 'rgba(144, 238, 144, 0.5)',
-      color: 'black',
+      textDecoration: "underline",
+      backgroundColor: "rgba(144, 238, 144, 0.5)",
+      color: "black"
     },
-    textDecoration: 'underline',
-    backgroundColor: 'rgba(255, 165, 0, 0.5)',
-    color: '#ffffff',
-  })
+    light: {
+      textDecoration: "underline",
+      backgroundColor: "rgba(255, 165, 0, 0.5)",
+      color: "#ffffff"
+    }
+  }, {
+    dark,
+    light
+  });
+  const decorationType = vscode.window.createTextEditorDecorationType(style)
 
   // 注册ToUnocss命令
   vscode.commands.registerTextEditorCommand('extension.ToUnocss', async (textEditor) => {
