@@ -10,6 +10,17 @@ export function activate(context: vscode.ExtensionContext) {
   // config = vscode.workspace.getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()
   const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
+  // style
+  const decorationType = vscode.window.createTextEditorDecorationType({
+    dark: {
+      textDecoration: 'underline',
+      backgroundColor: 'rgba(144, 238, 144, 0.5)',
+      color: 'black',
+    },
+    textDecoration: 'underline',
+    backgroundColor: 'rgba(255, 165, 0, 0.5)',
+    color: '#ffffff',
+  })
 
   // 注册ToUnocss命令
   vscode.commands.registerTextEditorCommand('extension.ToUnocss', async (textEditor) => {
@@ -56,26 +67,40 @@ export function activate(context: vscode.ExtensionContext) {
       const selection = editor.selection
       const wordRange = new vscode.Range(selection.start, selection.end)
       let selectedText = editor.document.getText(wordRange)
-
+      const realRangeMap: any = []
       if (!selectedText) {
         const range = document.getWordRangeAtPosition(position) as any
         let word = document.getText(range)
+        const line = range.c.c
         const lineNumber = position.line
-        const line = document.lineAt(lineNumber).text
+        const lineText = document.lineAt(lineNumber).text
         const styleMatch = word.match(styleReg)
-
         if (styleMatch) {
           word = styleMatch[1]
+          const index = styleMatch.index!
+          realRangeMap.push({
+            content: styleMatch[0],
+            range: new vscode.Range(
+              new vscode.Position(line, index!),
+              new vscode.Position(line, index! + styleMatch[1].length),
+            ),
+          })
         }
         else {
           // 可能存在多项，查找离range最近的
-          const wholeReg = new RegExp(`(\\w+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g')
-
-          for (const match of line.matchAll(wholeReg)) {
+          const wholeReg = new RegExp(`([\\w\\-]+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g')
+          for (const match of lineText.matchAll(wholeReg)) {
             const { index } = match
             const pos = index! + match[0].indexOf(word)
             if (pos === range?.c?.e) {
               word = match[0]
+              realRangeMap.push({
+                content: match[0],
+                range: new vscode.Range(
+                  new vscode.Position(line, index!),
+                  new vscode.Position(line, index! + match[0].length),
+                ),
+              })
               break
             }
           }
@@ -89,6 +114,9 @@ export function activate(context: vscode.ExtensionContext) {
       const selectedUnocssText = getMultipedUnocssText(selectedText)
       if (!selectedUnocssText)
         return
+
+      // 增加decorationType样式
+      editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item: any) => item.range)))
 
       const md = new vscode.MarkdownString()
       md.isTrusted = true
