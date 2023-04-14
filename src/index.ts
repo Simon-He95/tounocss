@@ -14,19 +14,19 @@ export function activate(context: vscode.ExtensionContext) {
   // style
   const style = Object.assign({
     dark: {
-      textDecoration: "underline",
-      backgroundColor: "rgba(144, 238, 144, 0.5)",
-      color: "black"
+      textDecoration: 'underline',
+      backgroundColor: 'rgba(144, 238, 144, 0.5)',
+      color: 'black',
     },
     light: {
-      textDecoration: "underline",
-      backgroundColor: "rgba(255, 165, 0, 0.5)",
-      color: "#ffffff"
-    }
+      textDecoration: 'underline',
+      backgroundColor: 'rgba(255, 165, 0, 0.5)',
+      color: '#ffffff',
+    },
   }, {
     dark,
-    light
-  });
+    light,
+  })
   const decorationType = vscode.window.createTextEditorDecorationType(style)
 
   // 注册ToUnocss命令
