@@ -8,7 +8,7 @@ const styleReg = /style="([^"]+)"/;
 export function activate(context) {
     // config = vscode.workspace.getConfiguration('to-unocss')
     const process = new CssToUnocssProcess();
-    const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss'];
+    const LANS = ['html', 'vue', 'svelte', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss'];
     // style
     const decorationType = vscode.window.createTextEditorDecorationType({
         dark: {
