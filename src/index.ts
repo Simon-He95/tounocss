@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
   const { dark, light } = vscode.workspace.getConfiguration('to-unocss')
 
   const process = new CssToUnocssProcess()
-  const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
+  const LANS = ['html', 'vue', 'svelte', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
   // style
   const style = Object.assign({
     dark: {
