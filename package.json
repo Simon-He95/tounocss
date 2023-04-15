@@ -3,7 +3,9 @@
   "name": "to-unocss",
   "displayName": "To Unocss",
   "version": "0.0.31",
+  "packageManager": "pnpm@8.1.1",
   "description": "Vscode extension transform css to unocss",
+  "author": "Simon He <https://github.com/Simon-He95>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
   "homepage": "https://github.com/Simon-He95/tounocss#readme",
@@ -32,15 +34,7 @@
     "vscode": "^1.77.0"
   },
   "activationEvents": [
-    "onLanguage:html",
-    "onLanguage:svelte",
-    "onLanguage:jsx",
-    "onLanguage:tsx",
-    "onLanguage:astro",
-    "onLanguage:vue",
-    "onLanguage:swan",
-    "onLanguage:wxml",
-    "onLanguage:axml"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
@@ -65,15 +59,14 @@
     ]
   },
   "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "test": "npm compile && node ./node_modules/vscode/bin/test",
+    "dev": "pnpm build --watch",
+    "test": "vitest",
     "build": "tsup src/index.ts --external vscode",
-    "package": "vsce package",
+    "pack": "vsce package --no-dependencies",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
     "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache --fix",
     "publish": "vsce publish --no-dependencies",
-    "release": "bumpp && npm run publish"
+    "release": "bumpp && pnpm run publish"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.4",

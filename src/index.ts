@@ -5,10 +5,9 @@ import { getMultipedUnocssText } from './utils'
 
 // let config = null
 // 插件被激活时调用activate
-const styleReg = /style="([^"]+)"/
 export function activate(context: vscode.ExtensionContext) {
+  const styleReg = /style="([^"]+)"/
   const { dark, light } = vscode.workspace.getConfiguration('to-unocss')
-
   const process = new CssToUnocssProcess()
   const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
   // style
@@ -137,10 +136,7 @@ export function activate(context: vscode.ExtensionContext) {
   })
 
   // 监听编辑器选择内容变化的事件
-  vscode.window.onDidChangeTextEditorSelection((event) => {
-    // 移除样式
-    vscode.window.activeTextEditor?.setDecorations(decorationType, [])
-  })
+  vscode.window.onDidChangeTextEditorSelection(() => vscode.window.activeTextEditor?.setDecorations(decorationType, []))
 
   context.subscriptions.push(disposable)
 }
