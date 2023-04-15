@@ -11,21 +11,18 @@ export function activate(context: vscode.ExtensionContext) {
   const process = new CssToUnocssProcess()
   const LANS = ['html', 'vue', 'swan', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
   // style
-  const style = Object.assign({
-    dark: {
+  const style = {
+    dark: Object.assign({
       textDecoration: 'underline',
       backgroundColor: 'rgba(144, 238, 144, 0.5)',
       color: 'black',
-    },
-    light: {
+    }, dark),
+    light: Object.assign({
       textDecoration: 'underline',
       backgroundColor: 'rgba(255, 165, 0, 0.5)',
       color: '#ffffff',
-    },
-  }, {
-    dark,
-    light,
-  })
+    }, light),
+  }
   const decorationType = vscode.window.createTextEditorDecorationType(style)
 
   // 注册ToUnocss命令
