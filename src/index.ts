@@ -121,7 +121,6 @@ export function activate(context: vscode.ExtensionContext) {
       // 获取当前选中的文本内容
       if (!selectedText || !/[\w\-]+\s*:/.test(selectedText))
         return
-      console.log(cacheMap)
       if (cacheMap.has((selectedText)))
         return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
       const selectedUnocssText = getMultipedUnocssText(selectedText)
