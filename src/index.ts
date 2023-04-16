@@ -1,15 +1,20 @@
 import * as vscode from 'vscode'
 import { CssToUnocssProcess } from './process'
-import { getMultipedUnocssText } from './utils'
+import { LRUCache, getMultipedUnocssText } from './utils'
 // 'use strict'
 
 // let config = null
 // 插件被激活时调用activate
+const cacheMap = new LRUCache(500)
+
 export function activate(context: vscode.ExtensionContext) {
   const styleReg = /style="([^"]+)"/
   const { dark, light } = vscode.workspace.getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()
   const LANS = ['html', 'vue', 'svelte', 'solid', 'swan', 'react', 'js', 'ts', 'tsx', 'jsx', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
+  const md = new vscode.MarkdownString()
+  md.isTrusted = true
+  md.supportHtml = true
   // style
   const style = {
     dark: Object.assign({
@@ -116,19 +121,16 @@ export function activate(context: vscode.ExtensionContext) {
       // 获取当前选中的文本内容
       if (!selectedText || !/[\w\-]+\s*:/.test(selectedText))
         return
+      console.log(cacheMap)
+      if (cacheMap.has((selectedText)))
+        return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
       const selectedUnocssText = getMultipedUnocssText(selectedText)
       if (!selectedUnocssText)
         return
+      // 设置缓存
+      cacheMap.set(selectedText, selectedUnocssText)
 
-      // 增加decorationType样式
-      editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item: any) => item.range)))
-
-      const md = new vscode.MarkdownString()
-      md.isTrusted = true
-      md.supportHtml = true
-      md.appendMarkdown('<a href="https://github.com/Simon-He95/tounocss">To Unocss:</a>\n')
-      md.appendCodeblock(selectedUnocssText, 'js')
-      return new vscode.Hover(md)
+      return setStyle(editor, realRangeMap, selectedUnocssText)
     },
   })
 
@@ -136,7 +138,16 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeTextEditorSelection(() => vscode.window.activeTextEditor?.setDecorations(decorationType, []))
 
   context.subscriptions.push(disposable)
+  function setStyle(editor: vscode.TextEditor, realRangeMap: any[], selectedUnocssText: string) {
+    // 增加decorationType样式
+    editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item: any) => item.range)))
+    md.value = ''
+    md.appendMarkdown('<a href="https://github.com/Simon-He95/tounocss">To Unocss:</a>\n')
+    md.appendCodeblock(selectedUnocssText, 'js')
+    return new vscode.Hover(md)
+  }
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {
+}
