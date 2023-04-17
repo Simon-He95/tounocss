@@ -66,72 +66,76 @@ export function activate(context: vscode.ExtensionContext) {
   })
 
   // 注册hover事件
-  vscode.languages.registerHoverProvider(LANS, {
-    provideHover(document, position) {
-      // 获取当前选中的文本范围
-      const editor = vscode.window.activeTextEditor
-      if (!editor)
-        return
-      // 移除样式
-      vscode.window.activeTextEditor?.setDecorations(decorationType, [])
-      const selection = editor.selection
-      const wordRange = new vscode.Range(selection.start, selection.end)
-      let selectedText = editor.document.getText(wordRange)
-      const realRangeMap: any = []
-      if (!selectedText) {
-        const range = document.getWordRangeAtPosition(position) as any
-        let word = document.getText(range)
-        const line = range.c.c
-        const lineNumber = position.line
-        const lineText = document.lineAt(lineNumber).text
-        const styleMatch = word.match(styleReg)
-        if (styleMatch) {
-          word = styleMatch[1]
-          const index = styleMatch.index!
-          realRangeMap.push({
-            content: styleMatch[0],
-            range: new vscode.Range(
-              new vscode.Position(line, index!),
-              new vscode.Position(line, index! + styleMatch[1].length),
-            ),
-          })
-        }
-        else {
-          // 可能存在多项，查找离range最近的
-          const wholeReg = new RegExp(`([\\w\\-]+\\s*:\\s*)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g')
-          for (const match of lineText.matchAll(wholeReg)) {
-            const { index } = match
-            const pos = index! + match[0].indexOf(word)
-            if (pos === range?.c?.e) {
-              word = match[0]
-              realRangeMap.push({
-                content: match[0],
-                range: new vscode.Range(
-                  new vscode.Position(line, index!),
-                  new vscode.Position(line, index! + match[0].length),
-                ),
-              })
-              break
+  setTimeout(() => {
+    vscode.languages.registerHoverProvider(LANS, {
+      provideHover(document, position) {
+        // 获取当前选中的文本范围
+        const editor = vscode.window.activeTextEditor
+        if (!editor)
+          return
+        // 移除样式
+        vscode.window.activeTextEditor?.setDecorations(decorationType, [])
+        const selection = editor.selection
+        const wordRange = new vscode.Range(selection.start, selection.end)
+        let selectedText = editor.document.getText(wordRange)
+        const realRangeMap: any = []
+        if (!selectedText) {
+          const range = document.getWordRangeAtPosition(position) as any
+          let word = document.getText(range)
+          const line = range.c.c
+          const lineNumber = position.line
+          const lineText = document.lineAt(lineNumber).text
+          const styleMatch = word.match(styleReg)
+          if (styleMatch) {
+            word = styleMatch[1]
+            const index = styleMatch.index!
+            realRangeMap.push({
+              content: styleMatch[0],
+              range: new vscode.Range(
+                new vscode.Position(line, index!),
+                new vscode.Position(line, index! + styleMatch[1].length),
+              ),
+            })
+          }
+          else {
+            // 可能存在多项，查找离range最近的
+            if (lineText.indexOf(':') < 1)
+              return
+            const wholeReg = new RegExp(`([\\w\\-]+\\s*:\\s)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^";\\/>]+)?`, 'g')
+            for (const match of lineText.matchAll(wholeReg)) {
+              const { index } = match
+              const pos = index! + match[0].indexOf(word)
+              if (pos === range?.c?.e) {
+                word = match[0]
+                realRangeMap.push({
+                  content: match[0],
+                  range: new vscode.Range(
+                    new vscode.Position(line, index!),
+                    new vscode.Position(line, index! + match[0].length),
+                  ),
+                })
+                break
+              }
             }
           }
+          selectedText = word
         }
-        selectedText = word
-      }
 
-      // 获取当前选中的文本内容
-      if (!selectedText || !/[\w\-]+\s*:/.test(selectedText))
-        return
-      if (cacheMap.has((selectedText)))
-        return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
-      const selectedUnocssText = getMultipedUnocssText(selectedText)
-      if (!selectedUnocssText)
-        return
-      // 设置缓存
-      cacheMap.set(selectedText, selectedUnocssText)
+        // 获取当前选中的文本内容
+        if (!selectedText || !/[\w\-]+\s*:/.test(selectedText))
+          return
+        if (cacheMap.has((selectedText)))
+          return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
+        const selectedUnocssText = getMultipedUnocssText(selectedText)
+        if (!selectedUnocssText)
+          return
+        // 设置缓存
+        cacheMap.set(selectedText, selectedUnocssText)
 
-      return setStyle(editor, realRangeMap, selectedUnocssText)
-    },
-  })
+        return setStyle(editor, realRangeMap, selectedUnocssText)
+      },
+    })
+  }, 500)
 
   // 监听编辑器选择内容变化的事件
   vscode.window.onDidChangeTextEditorSelection(() => vscode.window.activeTextEditor?.setDecorations(decorationType, []))
