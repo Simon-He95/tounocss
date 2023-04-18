@@ -75,7 +75,7 @@
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "pnpm": "^8.1.1",
-    "transform-to-unocss": "0.0.56",
+    "transform-to-unocss": "0.0.57",
     "tsup": "^6.7.0",
     "typescript": "^4.8.4",
     "vitest": "^0.29.8",
