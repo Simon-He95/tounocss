@@ -9,6 +9,10 @@ export function getCssType(filename: string) {
 }
 
 export function getMultipedUnocssText(text: string) {
+  const match = text.match(/style="([^"]+)"/)
+  if (match)
+    text = match[1]
+
   const selectedTexts = text.split(';').filter(i => i !== '"')
   let isChanged = false
   const selectedNewTexts = []

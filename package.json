@@ -37,6 +37,20 @@
     "onStartupFinished"
   ],
   "contributes": {
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus",
+          "command": "extension.ToUnocss",
+          "group": "6_px"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "extension.InlineStyleToUnocss",
+          "group": "6_px"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "extension.ToUnocss",
