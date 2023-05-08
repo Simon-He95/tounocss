@@ -101,7 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
             // 可能存在多项，查找离range最近的
             if (lineText.indexOf(':') < 1)
               return
-            const wholeReg = new RegExp(`([\\w\\-]+\\s*:\\s)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^:";\\/>]+)?`, 'g')
+            const wholeReg = new RegExp(`([\\w\\-]+\\s*:\\s)?([\\w\\-\\[\\(\\!]+)?${word}(:*\\s*[^:"}{\`,;\\/>]+)?`, 'g')
             for (const match of lineText.matchAll(wholeReg)) {
               const { index } = match
               const pos = index! + match[0].indexOf(word)
@@ -118,11 +118,11 @@ export function activate(context: vscode.ExtensionContext) {
               }
             }
           }
-          selectedText = word
+          selectedText = word.replace(/'/g, '').trim()
         }
 
         // 获取当前选中的文本内容
-        if (!selectedText || !/[\w\-]+\s*:/.test(selectedText))
+        if (!selectedText || !/[\w\-]+\s*:[^.]+/.test(selectedText))
           return
         if (cacheMap.has((selectedText)))
           return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
