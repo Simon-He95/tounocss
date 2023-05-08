@@ -7,7 +7,7 @@ specifiers:
   bumpp: ^9.1.0
   eslint: ^8.37.0
   pnpm: ^8.1.1
-  transform-to-unocss: 0.0.57
+  transform-to-unocss: 0.0.58
   tsup: ^6.7.0
   typescript: ^4.8.4
   vitest: ^0.29.8
@@ -20,7 +20,7 @@ devDependencies:
   bumpp: 9.1.0
   eslint: 8.38.0
   pnpm: 8.1.1
-  transform-to-unocss: 0.0.57
+  transform-to-unocss: 0.0.58
   tsup: 6.7.0_typescript@4.9.5
   typescript: 4.9.5
   vitest: 0.29.8
@@ -3477,8 +3477,8 @@ packages:
       punycode: 2.3.0
     dev: true
 
-  /transform-to-unocss/0.0.57:
-    resolution: {integrity: sha512-gWAxcMw0Q9lkicWqfzNEB4dKlwYeCl0VN1k2aY8fYEk1li23+4LFXL5nHbm+uPbCVOSswIcP5aamYzuckDi7Bw==}
+  /transform-to-unocss/0.0.58:
+    resolution: {integrity: sha512-o0NkIPc0m1wiIe6ySqDofNuLWHCd3SV7D0e5dYdLboNegey/x82GvcYx+ZwTng8iAu2LIa1kY1oKGQiOxj47nw==}
     hasBin: true
     dependencies:
       fast-glob: 3.2.12
