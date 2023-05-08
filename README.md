@@ -4,7 +4,9 @@
 <p align="center"> English | <a href="./README_zh.md">简体中文</a></p>
 
 
-![demo](/assets/demo.gif)
+![demo1](/assets/demo.gif)
+
+![demo2](/assets/demo2.gif)
 
 ## Config
 ```
