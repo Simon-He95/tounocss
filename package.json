@@ -40,7 +40,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "editorFocus",
+          "when": "editorFocus && editorLangId !== typescript",
           "command": "extension.ToUnocss",
           "group": "6_px"
         },
@@ -54,11 +54,11 @@
     "commands": [
       {
         "command": "extension.ToUnocss",
-        "title": "toUnocss"
+        "title": "page -> Unocss"
       },
       {
         "command": "extension.InlineStyleToUnocss",
-        "title": "styleToUnocss"
+        "title": "style -> Unocss"
       }
     ],
     "keybindings": [
@@ -89,7 +89,7 @@
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "pnpm": "^8.1.1",
-    "transform-to-unocss": "0.0.59",
+    "transform-to-unocss": "0.0.60",
     "tsup": "^6.7.0",
     "typescript": "^4.8.4",
     "vitest": "^0.29.8",
