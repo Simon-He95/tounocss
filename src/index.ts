@@ -42,7 +42,8 @@ export function activate(context: vscode.ExtensionContext) {
     const text = doc.getText(selection)
     // 替换文件内容
     const newSelection = await process.convertAll(text, fileName)
-
+    if (!newSelection)
+      return
     textEditor.edit((builder) => {
       builder.replace(selection, newSelection)
     })
@@ -60,6 +61,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
     const text = doc.getText(selection)
     const newSelection = await process.convert(text)
+    if (!newSelection)
+      return
     // 替换文件内容
     textEditor.edit((builder) => {
       builder.replace(selection, newSelection)
