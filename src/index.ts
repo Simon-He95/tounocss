@@ -1,13 +1,18 @@
 import * as vscode from 'vscode'
 import { CssToUnocssProcess } from './process'
-import { LRUCache, getMultipedUnocssText } from './utils'
+import { LRUCache, getMultipedUnocssText, hasFile } from './utils'
 // 'use strict'
 
 // let config = null
 // 插件被激活时调用activate
 const cacheMap = new LRUCache(500)
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
+  // 如果当前不是unocss的环境，则不激活,根据package.json中是否有unocss依赖
+  const pkgs = await hasFile(['**/package.json'])
+  if (!pkgs.some(pkg => pkg.includes('unocss')))
+    return
+
   const styleReg = /style="([^"]+)"/
   const { dark, light } = vscode.workspace.getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()

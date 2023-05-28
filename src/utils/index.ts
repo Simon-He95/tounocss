@@ -1,4 +1,7 @@
+import fsp from 'node:fs/promises'
 import { toUnocss } from 'transform-to-unocss'
+import fg from 'fast-glob'
+import * as vscode from 'vscode'
 
 export type CssType = 'less' | 'scss' | 'css' | 'stylus'
 export function getCssType(filename: string) {
@@ -64,4 +67,20 @@ export class LRUCache {
   has(key: any) {
     return this.cache.has(key)
   }
+}
+
+export async function hasFile(source: string | string[]) {
+  const workspaceFolders = vscode.workspace.workspaceFolders
+  if (!workspaceFolders)
+    return []
+  const cwd = workspaceFolders[0].uri.fsPath
+  const entries = await fg(source, {
+    cwd,
+    ignore: ['**/dist/**', '**/node_modules/**'],
+  })
+
+  return await Promise.all(entries.map((relativepath) => {
+    const absolutepath = `${cwd}/${relativepath}`
+    return fsp.readFile(absolutepath, 'utf-8')
+  }))
 }
