@@ -26,6 +26,9 @@
   }
 ```
 
+## Feature
+if your project package.json hasn't `unocss` dependency, the extension will not be activated
+
 ## :coffee:
 
 [buy me a cup of coffee](https://github.com/Simon-He95/sponsor)

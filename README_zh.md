@@ -27,6 +27,9 @@ vscode 插件将 css 转换为 [unocss](https://github.com/unocss/unocss)。它�
   }
 ```
 
+## Feature
+如果您的项目中的package.json未找到 `unocss`的依赖，则扩展将不会被激活
+
 ## :coffee:
 
 [请我喝一杯咖啡](https://github.com/Simon-He95/sponsor)
