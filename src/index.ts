@@ -37,7 +37,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const decorationType = vscode.window.createTextEditorDecorationType(style)
 
   // 注册ToUnocss命令
-  vscode.commands.registerTextEditorCommand('extension.ToUnocss', async (textEditor) => {
+  vscode.commands.registerTextEditorCommand('tounocss.ToUnocss', async (textEditor) => {
     const doc = textEditor.document
     const fileName = doc.fileName
     const start = new vscode.Position(0, 0)
@@ -55,7 +55,7 @@ export async function activate(context: vscode.ExtensionContext) {
   })
 
   // 注册InlineStyleToUnocss命令
-  const disposable = vscode.commands.registerTextEditorCommand('extension.InlineStyleToUnocss', async (textEditor) => {
+  const disposable = vscode.commands.registerTextEditorCommand('tounocss.InlineStyleToUnocss', async (textEditor) => {
     const doc = textEditor.document
     let selection: vscode.Selection | vscode.Range = textEditor.selection
     // 获取选中区域
@@ -155,7 +155,7 @@ export async function activate(context: vscode.ExtensionContext) {
     editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item: any) => item.range)))
     md.value = ''
     md.appendMarkdown('<a href="https://github.com/Simon-He95/tounocss">To Unocss:</a>\n')
-    md.appendCodeblock(selectedUnocssText, 'js')
+    md.appendCodeblock(`attributify: ${selectedUnocssText}\nclass: ${selectedUnocssText.replace(/="([^"]+)"/g, (_, v) => `-${v}`)}`, 'js')
     return new vscode.Hover(md)
   }
 }

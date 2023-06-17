@@ -41,33 +41,33 @@
       "editor/context": [
         {
           "when": "editorFocus && editorLangId !== typescript",
-          "command": "extension.ToUnocss",
+          "command": "tounocss.ToUnocss",
           "group": "6_px"
         },
         {
           "when": "editorHasSelection",
-          "command": "extension.InlineStyleToUnocss",
+          "command": "tounocss.InlineStyleToUnocss",
           "group": "6_px"
         }
       ]
     },
     "commands": [
       {
-        "command": "extension.ToUnocss",
+        "command": "tounocss.ToUnocss",
         "title": "page -> Unocss"
       },
       {
-        "command": "extension.InlineStyleToUnocss",
+        "command": "tounocss.InlineStyleToUnocss",
         "title": "style -> Unocss"
       }
     ],
     "keybindings": [
       {
-        "command": "extension.ToUnocss",
+        "command": "tounocss.ToUnocss",
         "key": "cmd+Alt+p"
       },
       {
-        "command": "extension.InlineStyleToUnocss",
+        "command": "tounocss.InlineStyleToUnocss",
         "key": "Alt+shift+p"
       }
     ]
