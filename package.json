@@ -82,6 +82,9 @@
     "publish": "vsce publish --no-dependencies",
     "release": "bumpp && pnpm run publish"
   },
+  "dependencies": {
+    "@vscode-use/utils": "^0.0.20"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",

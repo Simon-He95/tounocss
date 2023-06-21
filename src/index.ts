@@ -1,4 +1,5 @@
 import * as vscode from 'vscode'
+import { copyText, getConfiguration, message, registerCommand } from '@vscode-use/utils'
 import { CssToUnocssProcess } from './process'
 import { LRUCache, getMultipedUnocssText, hasFile } from './utils'
 // 'use strict'
@@ -14,12 +15,14 @@ export async function activate(context: vscode.ExtensionContext) {
     return
 
   const styleReg = /style="([^"]+)"/
-  const { dark, light } = vscode.workspace.getConfiguration('to-unocss')
+  const { dark, light } = getConfiguration('to-unocss')
   const process = new CssToUnocssProcess()
   const LANS = ['html', 'vue', 'svelte', 'solid', 'swan', 'react', 'js', 'ts', 'tsx', 'jsx', 'wxml', 'axml', 'css', 'wxss', 'acss', 'less', 'scss', 'sass', 'stylus', 'wxss', 'acss']
   const md = new vscode.MarkdownString()
   md.isTrusted = true
   md.supportHtml = true
+  let copyClass = ''
+  let copyAttr = ''
   // style
   const style = {
     dark: Object.assign({
@@ -37,7 +40,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const decorationType = vscode.window.createTextEditorDecorationType(style)
 
   // 注册ToUnocss命令
-  vscode.commands.registerTextEditorCommand('tounocss.ToUnocss', async (textEditor) => {
+  registerCommand('tounocss.ToUnocss', async (textEditor) => {
     const doc = textEditor.document
     const fileName = doc.fileName
     const start = new vscode.Position(0, 0)
@@ -55,7 +58,7 @@ export async function activate(context: vscode.ExtensionContext) {
   })
 
   // 注册InlineStyleToUnocss命令
-  const disposable = vscode.commands.registerTextEditorCommand('tounocss.InlineStyleToUnocss', async (textEditor) => {
+  const disposable = registerCommand('tounocss.InlineStyleToUnocss', async (textEditor) => {
     const doc = textEditor.document
     let selection: vscode.Selection | vscode.Range = textEditor.selection
     // 获取选中区域
@@ -72,6 +75,16 @@ export async function activate(context: vscode.ExtensionContext) {
     textEditor.edit((builder) => {
       builder.replace(selection, newSelection)
     })
+  })
+
+  // copy
+  registerCommand('tounocss.copyAttr', () => {
+    copyText(copyAttr)
+    message.info('copy successfully')
+  })
+  registerCommand('tounocss.copyClass', () => {
+    copyText(copyClass)
+    message.info('copy successfully')
   })
 
   // 注册hover事件
@@ -154,8 +167,14 @@ export async function activate(context: vscode.ExtensionContext) {
     // 增加decorationType样式
     editor.edit(() => editor.setDecorations(decorationType, realRangeMap.map((item: any) => item.range)))
     md.value = ''
+    copyAttr = selectedUnocssText
+    const copyIcon = '<img width="12" height="12" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UyOWNkMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggZD0iTTIwLjk5OCAxMGMtLjAxMi0yLjE3NS0uMTA4LTMuMzUzLS44NzctNC4xMjFDMTkuMjQzIDUgMTcuODI4IDUgMTUgNWgtM2MtMi44MjggMC00LjI0MyAwLTUuMTIxLjg3OUM2IDYuNzU3IDYgOC4xNzIgNiAxMXY1YzAgMi44MjggMCA0LjI0My44NzkgNS4xMjFDNy43NTcgMjIgOS4xNzIgMjIgMTIgMjJoM2MyLjgyOCAwIDQuMjQzIDAgNS4xMjEtLjg3OUMyMSAyMC4yNDMgMjEgMTguODI4IDIxIDE2di0xIi8+PHBhdGggZD0iTTMgMTB2NmEzIDMgMCAwIDAgMyAzTTE4IDVhMyAzIDAgMCAwLTMtM2gtNEM3LjIyOSAyIDUuMzQzIDIgNC4xNzIgMy4xNzJDMy41MTggMy44MjUgMy4yMjkgNC43IDMuMTAyIDYiLz48L2c+PC9zdmc+" />'
     md.appendMarkdown('<a href="https://github.com/Simon-He95/tounocss">To Unocss:</a>\n')
-    md.appendCodeblock(`attributify: ${selectedUnocssText}\nclass: ${selectedUnocssText.replace(/="([^"]+)"/g, (_, v) => `-${v}`)}`, 'js')
+    md.appendMarkdown(`\n<a href="command:tounocss.copyAttr">attributify: ${copyIcon} ${selectedUnocssText}</a>\n`)
+    md.appendMarkdown('\n')
+    copyClass = selectedUnocssText.replace(/="([^"]+)"/g, (_, v) => `-${v}`)
+    md.appendMarkdown(`\n<a href="command:tounocss.copyClass" style="display:flex;align-items:center;gap:5px;">class: ${copyIcon} ${copyClass}</a>\n`)
+
     return new vscode.Hover(md)
   }
 }
