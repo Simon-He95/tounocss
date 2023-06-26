@@ -83,10 +83,10 @@
     "release": "bumpp && pnpm run publish"
   },
   "devDependencies": {
-    "@vscode-use/utils": "^0.0.20",
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",
     "@types/vscode": "^1.77.0",
+    "@vscode-use/utils": "^0.0.20",
     "bumpp": "^9.1.0",
     "eslint": "^8.37.0",
     "pnpm": "^8.1.1",

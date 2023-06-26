@@ -40,7 +40,8 @@ export async function activate(context: vscode.ExtensionContext) {
   const decorationType = vscode.window.createTextEditorDecorationType(style)
 
   // 注册ToUnocss命令
-  registerCommand('tounocss.ToUnocss', async (textEditor) => {
+  registerCommand('tounocss.ToUnocss', async () => {
+    const textEditor = vscode.window.activeTextEditor!
     const doc = textEditor.document
     const fileName = doc.fileName
     const start = new vscode.Position(0, 0)
@@ -58,7 +59,8 @@ export async function activate(context: vscode.ExtensionContext) {
   })
 
   // 注册InlineStyleToUnocss命令
-  const disposable = registerCommand('tounocss.InlineStyleToUnocss', async (textEditor) => {
+  const disposable = registerCommand('tounocss.InlineStyleToUnocss', async () => {
+    const textEditor = vscode.window.activeTextEditor!
     const doc = textEditor.document
     let selection: vscode.Selection | vscode.Range = textEditor.selection
     // 获取选中区域
