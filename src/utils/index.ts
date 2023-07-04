@@ -67,6 +67,10 @@ export class LRUCache {
   has(key: any) {
     return this.cache.has(key)
   }
+
+  clear() {
+    return this.cache.clear()
+  }
 }
 
 export async function hasFile(source: string | string[]) {
