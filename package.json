@@ -40,7 +40,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "editorFocus && editorLangId !== typescript",
+          "when": "editorFocus && !editorHasSelection &&  editorLangId !== typescript",
           "command": "tounocss.ToUnocss",
           "group": "6_px"
         },
