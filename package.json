@@ -2,7 +2,7 @@
   "publisher": "simonhe",
   "name": "to-unocss",
   "displayName": "To Unocss",
-  "version": "0.0.57",
+  "version": "0.0.58",
   "packageManager": "pnpm@8.1.1",
   "description": "Vscode extension transform css to unocss",
   "author": "Simon He <https://github.com/Simon-He95>",
@@ -82,7 +82,6 @@
     "publish": "vsce publish --no-dependencies",
     "release": "bumpp && pnpm run publish"
   },
-
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",
