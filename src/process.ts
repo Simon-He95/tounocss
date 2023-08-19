@@ -1,5 +1,6 @@
 import { transfromCode } from 'transform-to-unocss'
 import { getCssType, getMultipedUnocssText } from './utils'
+import { isOpen } from '.'
 
 export class CssToUnocssProcess {
   /**
@@ -21,7 +22,7 @@ export class CssToUnocssProcess {
   async convertAll(code: string, fileName: string): Promise<string> {
     if (!code)
       return ''
-    const type = getCssType(fileName)
-    return await transfromCode(code, fileName, type as any)
+    const type = getCssType(fileName) as any
+    return await transfromCode(code, { filepath: fileName, type, isRem: isOpen })
   }
 }

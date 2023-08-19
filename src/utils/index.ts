@@ -1,7 +1,8 @@
 import fsp from 'node:fs/promises'
-import { toUnocss } from 'transform-to-unocss'
+import { toUnocss } from 'transform-to-unocss-core'
 import fg from 'fast-glob'
 import * as vscode from 'vscode'
+import { isOpen } from '..'
 
 export type CssType = 'less' | 'scss' | 'css' | 'stylus'
 export function getCssType(filename: string) {
@@ -26,7 +27,9 @@ export function getMultipedUnocssText(text: string) {
       continue
     if (!isChanged)
       isChanged = newText !== text
-    selectedNewTexts.push(newText)
+    selectedNewTexts.push(isOpen
+      ? newText.replace(/-([0-9\.]+)px/, (_: string, v: string) => `-${v / 4}`)
+      : newText)
   }
   // 没有存在能够转换的元素
   if (!isChanged)

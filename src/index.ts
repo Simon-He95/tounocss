@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { addEventListener, copyText, getConfiguration, message, registerCommand } from '@vscode-use/utils'
+import { addEventListener, copyText, createBottomBar, getConfiguration, message, registerCommand } from '@vscode-use/utils'
 import { CssToUnocssProcess } from './process'
 import { LRUCache, getMultipedUnocssText, hasFile } from './utils'
 // 'use strict'
@@ -7,6 +7,7 @@ import { LRUCache, getMultipedUnocssText, hasFile } from './utils'
 // let config = null
 // 插件被激活时调用activate
 const cacheMap = new LRUCache(500)
+export let isOpen = false
 
 export async function activate(context: vscode.ExtensionContext) {
   // 如果当前不是unocss的环境，则不激活,根据package.json中是否有unocss依赖
@@ -37,8 +38,24 @@ export async function activate(context: vscode.ExtensionContext) {
       borderRadius: '6px',
     }, light),
   }
-  const decorationType = vscode.window.createTextEditorDecorationType(style)
+
+  const bottomBar = createBottomBar({
+    text: 'to-rem ❌',
+    command: {
+      title: 'tounocss-toRem',
+      command: 'tounocssToRem.changeStatus',
+    },
+    position: 'left',
+    offset: 500,
+  })
   const disposes = []
+  disposes.push(registerCommand('tounocssToRem.changeStatus', () => {
+    isOpen = !isOpen
+    bottomBar.text = `to-rem ${isOpen ? '✅' : '❌'}`
+  }))
+  bottomBar.show()
+
+  const decorationType = vscode.window.createTextEditorDecorationType(style)
   // 注册ToUnocss命令
   disposes.push(registerCommand('tounocss.ToUnocss', async () => {
     const textEditor = vscode.window.activeTextEditor!
@@ -147,8 +164,8 @@ export async function activate(context: vscode.ExtensionContext) {
       // 获取当前选中的文本内容
       if (!selectedText || !/[\w\-]+\s*:[^.]+/.test(selectedText))
         return
-      if (cacheMap.has((selectedText)))
-        return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
+      // if (cacheMap.has((selectedText)))
+      //   return setStyle(editor, realRangeMap, cacheMap.get(selectedText))
       const selectedUnocssText = getMultipedUnocssText(selectedText)
       if (!selectedUnocssText)
         return
