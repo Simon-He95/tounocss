@@ -82,9 +82,7 @@
     "publish": "vsce publish --no-dependencies",
     "release": "bumpp && pnpm run publish"
   },
-  "dependencies": {
-    "transform-to-unocss-core": "^0.0.1"
-  },
+
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.4",
     "@types/node": "^18.15.11",
@@ -94,6 +92,7 @@
     "eslint": "^8.37.0",
     "pnpm": "^8.1.1",
     "transform-to-unocss": "0.0.66",
+    "transform-to-unocss-core": "^0.0.1",
     "tsup": "^6.7.0",
     "typescript": "^4.8.4",
     "vitest": "^0.29.8",
