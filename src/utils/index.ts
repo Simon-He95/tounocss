@@ -28,7 +28,7 @@ export function getMultipedUnocssText(text: string) {
     if (!isChanged)
       isChanged = newText !== text
     selectedNewTexts.push(isOpen
-      ? newText.replace(/-([0-9\.]+)px/, (_: string, v: string) => `-${v / 4}`)
+      ? newText.replace(/-([0-9\.]+)px/, (_: string, v: string) => `-${+v / 4}`)
       : newText)
   }
   // 没有存在能够转换的元素
